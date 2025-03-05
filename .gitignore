@@ -1,0 +1,15 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+out/
+
+# Maven / Gradle
+target/
+*.jar
+*.war
+*.ear
+build/
+
+# Configuración de entorno
+*.log
+.env

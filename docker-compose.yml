@@ -1,0 +1,49 @@
+version: '3'
+
+services:
+  eureka-server:
+    build: ./eureka-server
+    ports:
+      - "8761:8761"
+    networks:
+      - coworking-network
+
+  user-service:
+    build: ./user-service
+    ports:
+      - "8081:8081"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+    networks:
+      - coworking-network
+    depends_on:
+      - eureka-server
+
+  space-service:
+    build: ./space-service
+    ports:
+      - "8082:8082"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+    networks:
+      - coworking-network
+    depends_on:
+      - eureka-server
+
+  reservation-service:
+    build: ./reservation-service
+    ports:
+      - "8083:8083"
+    environment:
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+    networks:
+      - coworking-network
+    depends_on:
+      - eureka-server
+      - user-service
+      - space-service
+
+networks:
+  coworking-network:
+    driver: bridge
+
